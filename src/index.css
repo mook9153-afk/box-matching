@@ -428,6 +428,7 @@ code { font-family: monospace; background: #f1f5f9; padding: 1px 5px; border-rad
 .card-footer {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 8px;
   padding: 8px 14px;
   background: #f8fafc;
@@ -524,12 +525,301 @@ code { font-family: monospace; background: #f1f5f9; padding: 1px 5px; border-rad
 /* 수정 행 */
 .edit-row td { padding: 16px; background: #eff6ff; }
 
+/* ── 견적 내기 버튼 (ResultCard footer) ──────────────────── */
+.card-footer-left { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.btn--quote {
+  padding: 5px 14px;
+  border-radius: var(--radius-sm);
+  background: var(--color-primary);
+  color: white;
+  font-size: .8rem;
+  font-weight: 600;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: background .15s;
+}
+.btn--quote:hover { background: var(--color-primary-hover); }
+
+/* ── 견적 페이지 ─────────────────────────────────────────── */
+.quote-layout {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.quote-topbar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+.quote-page-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--color-primary);
+}
+.quote-body {
+  display: grid;
+  grid-template-columns: 400px 1fr;
+  gap: 20px;
+  align-items: start;
+}
+.quote-left { display: flex; flex-direction: column; gap: 16px; }
+.quote-right { position: sticky; top: calc(var(--header-height) + 20px); }
+
+/* 견적 카드 */
+.quote-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.quote-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.quote-section-title {
+  font-size: .8rem;
+  font-weight: 700;
+  color: var(--color-text-sub);
+  text-transform: uppercase;
+  letter-spacing: .5px;
+}
+.quote-product-name {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.quote-name {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+/* 제품 스펙 테이블 */
+.quote-product-specs {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  background: #f8fafc;
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+}
+.quote-spec-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: .875rem;
+}
+.quote-spec-label {
+  color: var(--color-text-sub);
+  font-weight: 600;
+  min-width: 44px;
+}
+.quote-spec-value {
+  color: var(--color-text);
+  font-variant-numeric: tabular-nums;
+}
+
+/* 적재 수량 참고 */
+.quote-load-ref {
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.quote-load-title {
+  font-size: .78rem;
+  font-weight: 700;
+  color: var(--color-ts);
+  margin-bottom: 2px;
+}
+.quote-load-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: .85rem;
+}
+.quote-load-label { color: var(--color-text-sub); font-weight: 600; }
+.quote-load-val { color: var(--color-text); font-variant-numeric: tabular-nums; }
+
+/* 견적 입력 필드 */
+.quote-field { display: flex; flex-direction: column; gap: 6px; }
+.quote-label {
+  font-size: .82rem;
+  font-weight: 600;
+  color: var(--color-text-sub);
+}
+.quote-unit { font-weight: 400; color: var(--color-text-light); }
+.quote-input { font-size: .95rem; }
+
+/* 수량 탭 버튼 */
+.quote-qty-tabs {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.quote-qty-btn {
+  padding: 6px 14px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+  background: white;
+  color: var(--color-text-sub);
+  font-size: .82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all .15s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+.quote-qty-btn:hover { border-color: var(--color-primary); color: var(--color-primary); }
+.quote-qty-btn--active {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: white;
+}
+.quote-qty-btn--active .quote-qty-sub { color: rgba(255,255,255,.75); }
+.quote-qty-btn--empty { opacity: .55; }
+.quote-qty-sub {
+  font-size: .7rem;
+  font-weight: 400;
+  color: var(--color-text-light);
+  font-variant-numeric: tabular-nums;
+}
+
+/* 수량 표시 (자동 반영 시) */
+.quote-qty-display {
+  padding: 10px 14px;
+  background: #f0f4f8;
+  border-radius: var(--radius-sm);
+  font-size: .95rem;
+  color: var(--color-text);
+}
+.quote-qty-num { font-size: 1.15rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+.quote-qty-na { color: var(--color-text-light); font-size: .85rem; }
+
+/* 계산 결과 카드 */
+.quote-result-card { gap: 0; }
+.quote-result-rows { display: flex; flex-direction: column; margin-top: 14px; }
+.quote-result-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+}
+.quote-result-label { font-size: .9rem; color: var(--color-text-sub); font-weight: 500; }
+.quote-result-value { font-size: 1rem; font-weight: 700; color: var(--color-text); font-variant-numeric: tabular-nums; }
+.quote-result-unit { font-size: .8rem; font-weight: 400; color: var(--color-text-sub); }
+.quote-result-na { color: var(--color-text-light); font-weight: 400; font-size: .9rem; }
+.quote-result-detail { padding-bottom: 6px; }
+.quote-result-formula { font-size: .75rem; color: var(--color-text-light); }
+.quote-result-divider { height: 1px; background: var(--color-border-light); margin: 4px 0; }
+
+/* 최종 공급가 강조 */
+.quote-result-total-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 16px;
+  margin: 8px -18px -18px;
+  background: var(--color-primary);
+  border-radius: 0 0 var(--radius) var(--radius);
+}
+.quote-result-total-label { font-size: 1rem; font-weight: 700; color: rgba(255,255,255,.85); }
+.quote-result-total-value { font-size: 1.4rem; font-weight: 800; color: white; font-variant-numeric: tabular-nums; }
+.quote-result-total-unit { font-size: .85rem; font-weight: 400; }
+.quote-result-total-vat { font-size: .8rem; font-weight: 500; opacity: .8; }
+
+/* VAT 토글 버튼 */
+.vat-toggle-btn {
+  padding: 4px 12px;
+  border-radius: 20px;
+  border: 1px solid var(--color-border);
+  background: white;
+  color: var(--color-text-sub);
+  font-size: .78rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all .15s;
+  white-space: nowrap;
+}
+.vat-toggle-btn:hover { border-color: var(--color-primary); color: var(--color-primary); }
+.vat-toggle-btn--on {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: white;
+}
+
+/* 계산 과정 소제목 */
+.quote-section-sub {
+  font-size: .72rem;
+  font-weight: 700;
+  color: var(--color-text-light);
+  text-transform: uppercase;
+  letter-spacing: .4px;
+  padding: 10px 0 2px;
+  border-top: 1px solid var(--color-border-light);
+  margin-top: 4px;
+}
+.quote-result-rows .quote-section-sub:first-child {
+  border-top: none;
+  margin-top: 0;
+  padding-top: 4px;
+}
+
+/* 핵심 단가 강조 행 (운임 녹인 개당 단가, 원/g) */
+.quote-result-row--highlight {
+  background: #eff6ff;
+  border-radius: var(--radius-sm);
+  padding: 8px 10px;
+  margin: 2px -10px;
+}
+.quote-result-row--highlight .quote-result-label { color: var(--color-primary); font-weight: 600; }
+.quote-result-row--highlight .quote-result-value { color: var(--color-primary); }
+.quote-result-row--highlight .quote-result-unit  { color: var(--color-primary); opacity: .7; }
+
+/* 결과 작은 보조 텍스트 */
+.quote-result-small { font-size: .78rem; font-weight: 400; color: var(--color-text-light); }
+
+/* 입력 전 안내 */
+.quote-result-placeholder {
+  padding: 32px 0;
+  text-align: center;
+  color: var(--color-text-light);
+  font-size: .9rem;
+}
+
+/* 견적 빈 상태 */
+.quote-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  min-height: 300px;
+  text-align: center;
+}
+
 /* ── 반응형 (모바일) ─────────────────────────────────────── */
 @media (max-width: 900px) {
   .page-layout {
     grid-template-columns: 1fr;
   }
   .search-sidebar {
+    position: static;
+  }
+  .quote-body {
+    grid-template-columns: 1fr;
+  }
+  .quote-right {
     position: static;
   }
 }

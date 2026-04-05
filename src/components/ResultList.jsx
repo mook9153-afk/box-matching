@@ -13,7 +13,7 @@ import { copyToClipboard, downloadCSV } from '../utils/exportUtils';
 
 const FILTER_TABS = ['전체', FITNESS.PERFECT, FITNESS.CONDITIONAL, FITNESS.REVIEW];
 
-export default function ResultList({ results, tolerance, searchParams }) {
+export default function ResultList({ results, tolerance, searchParams, onQuote }) {
   const [activeFilter, setActiveFilter] = useState('전체');
   const [copyStatus, setCopyStatus] = useState('');
 
@@ -29,27 +29,23 @@ export default function ResultList({ results, tolerance, searchParams }) {
     );
   }
 
-  // 필터 탭 카운트
   const countByFitness = {
     [FITNESS.PERFECT]: results.filter((r) => r.fitness === FITNESS.PERFECT).length,
     [FITNESS.CONDITIONAL]: results.filter((r) => r.fitness === FITNESS.CONDITIONAL).length,
     [FITNESS.REVIEW]: results.filter((r) => r.fitness === FITNESS.REVIEW).length,
   };
 
-  // 현재 필터 적용
   const filtered =
     activeFilter === '전체'
       ? results
       : results.filter((r) => r.fitness === activeFilter);
 
-  // 클립보드 복사
   const handleCopy = async () => {
     const ok = await copyToClipboard(filtered);
     setCopyStatus(ok ? '복사 완료!' : '복사 실패');
     setTimeout(() => setCopyStatus(''), 2000);
   };
 
-  // CSV 다운로드
   const handleCSV = () => downloadCSV(filtered);
 
   const hasOuter = !!searchParams?.outerStr;
@@ -57,7 +53,6 @@ export default function ResultList({ results, tolerance, searchParams }) {
 
   return (
     <div className="result-list">
-      {/* 결과 헤더 */}
       <div className="result-header">
         <div className="result-title">
           검색 결과 <span className="result-count">{results.length}건</span>
@@ -72,7 +67,6 @@ export default function ResultList({ results, tolerance, searchParams }) {
         </div>
       </div>
 
-      {/* 필터 탭 */}
       <div className="filter-tabs">
         {FILTER_TABS.map((tab) => {
           const count = tab === '전체' ? results.length : countByFitness[tab];
@@ -89,7 +83,6 @@ export default function ResultList({ results, tolerance, searchParams }) {
         })}
       </div>
 
-      {/* 카드 목록 */}
       <div className="card-grid">
         {filtered.map((result, i) => (
           <ResultCard
@@ -99,6 +92,7 @@ export default function ResultList({ results, tolerance, searchParams }) {
             tolerance={tolerance}
             hasOuter={hasOuter}
             hasInner={hasInner}
+            onQuote={onQuote}
           />
         ))}
       </div>

@@ -56,7 +56,7 @@ function DiffDisplay({ diff, tolerance, type }) {
   );
 }
 
-export default function ResultCard({ result, rank, tolerance, hasOuter, hasInner }) {
+export default function ResultCard({ result, rank, tolerance, hasOuter, hasInner, onQuote }) {
   const fitnessClass = FITNESS_CLASS[result.fitness] || '';
   const fitnessIcon = FITNESS_ICON[result.fitness] || '';
   const companyClass = COMPANY_CLASS[result.company] || '';
@@ -110,11 +110,21 @@ export default function ResultCard({ result, rank, tolerance, hasOuter, hasInner
         )}
       </div>
 
-      {/* 총 오차 점수 */}
+      {/* 총 오차 점수 + 견적 버튼 */}
       <div className="card-footer">
-        <span className="score-label">총 오차</span>
-        <span className="score-value">{result.totalScore} mm</span>
-        {result.notes && <span className="card-notes">{result.notes}</span>}
+        <div className="card-footer-left">
+          <span className="score-label">총 오차</span>
+          <span className="score-value">{result.totalScore} mm</span>
+          {result.notes && <span className="card-notes">{result.notes}</span>}
+        </div>
+        {onQuote && (
+          <button
+            className="btn btn--quote"
+            onClick={() => onQuote(result)}
+          >
+            견적 내기
+          </button>
+        )}
       </div>
     </div>
   );

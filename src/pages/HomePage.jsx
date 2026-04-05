@@ -8,7 +8,7 @@ import ResultList from '../components/ResultList';
 import { matchProducts } from '../services/matchingService';
 import { getActiveProducts } from '../services/dataService';
 
-export default function HomePage() {
+export default function HomePage({ onQuote }) {
   const [results, setResults] = useState(null);      // null = 미검색, [] = 결과 없음
   const [loading, setLoading] = useState(false);
   const [lastSearch, setLastSearch] = useState(null); // 마지막 검색 파라미터 저장
@@ -82,6 +82,7 @@ export default function HomePage() {
               results={results}
               tolerance={tolerance}
               searchParams={lastSearch}
+              onQuote={onQuote}
             />
           )}
         </section>
